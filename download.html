@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download MeetScribe — free trial</title>
+<meta name="description" content="Download MeetScribe free — your first 5 meetings are free. Runs offline on your own computer.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="index.html">Meet<span>Scribe</span></a>
+    <nav class="nav">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap narrow">
+      <p class="kicker">Free trial</p>
+      <h1>Download MeetScribe — <em>first 5 meetings free.</em></h1>
+      <p class="lead">Download it below, unzip it, and it runs on your own computer, offline. Your first 5 meetings are free — record, transcribe, or import them and see your own action items. When you want the limit off, a license key is $29, one time.</p>
+      <div class="hero-actions">
+        <a class="btn btn-large" id="download-btn" href="meetscribe-1.3.0.zip.b64">Preparing your download…</a>
+      </div>
+      <p class="hero-note" id="download-note">MeetScribe v1.3.0 — the full app: recording, transcription, import, the commitments register, search and export.</p>
+      <noscript><p class="hero-note">This download needs JavaScript turned on — the page unpacks your file in the browser. Turn it on and reload, and the button will be ready.</p></noscript>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap narrow">
+      <h2>Getting started</h2>
+      <ol class="steps">
+        <li>
+          <h3>1 · Download and unzip</h3>
+          <p>Click the button above and unzip the file you get. Keep the unzipped folder somewhere you'll keep it — that folder is the app.</p>
+        </li>
+        <li>
+          <h3>2 · You need Python 3.10 or newer</h3>
+          <p>It's free from python.org, and it's the only thing the core tool needs. Recording and transcription use two optional extra packages — one install command, listed in the README inside the folder — plus the free ffmpeg program if you'll transcribe non-WAV recordings.</p>
+        </li>
+        <li>
+          <h3>3 · Try it on the samples first</h3>
+          <p>Open a terminal (Mac/Linux) or Command Prompt (Windows) in the unzipped folder and run:<br>
+          <code>python -m meetscribe import samples</code><br>
+          <code>python -m meetscribe actions</code><br>
+          That loads the four sample meetings and shows you the action items and decisions. To use the point-and-click view instead, run <code>python -m meetscribe serve</code> and open http://127.0.0.1:8765 in your browser.</p>
+        </li>
+        <li>
+          <h3>4 · When you want the limit off</h3>
+          <p>Buy a license key — $29, one time — and it is emailed to the address you pay with. Activate it with:<br>
+          <code>python -m meetscribe license activate MSCR-.... --email you@example.com</code><br>
+          Get a key here: <a href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">Buy MeetScribe — $29 one time</a>. Pro, which adds automatic Fathom sync, is $9 a month — your Pro key comes by email too, and activates with <code>python -m meetscribe license activate-pro MSPR-.... --email you@example.com</code>.</p>
+        </li>
+      </ol>
+      <div class="center">
+        <a class="btn btn-ghost btn-large" href="index.html">Back to the MeetScribe site</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>MeetScribe by Ashley Sperry</p>
+    <p><a href="index.html#pricing">Buy MeetScribe — $29</a> · <a href="index.html#faq">FAQ</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('download-btn');
+  var note = document.getElementById('download-note');
+  fetch('meetscribe-1.3.0.zip.b64')
+    .then(function (r) { if (!r.ok) { throw new Error('fetch failed'); } return r.text(); })
+    .then(function (text) {
+      var bin = atob(text.replace(/\s+/g, ''));
+      var bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) { bytes[i] = bin.charCodeAt(i); }
+      var blob = new Blob([bytes], { type: 'application/zip' });
+      btn.href = URL.createObjectURL(blob);
+      btn.setAttribute('download', 'meetscribe-1.3.0.zip');
+      btn.textContent = 'Download MeetScribe — v1.3.0 (.zip)';
+    })
+    .catch(function () {
+      btn.textContent = 'Download MeetScribe — v1.3.0 (encoded file)';
+      note.textContent = 'Your browser could not unpack the download automatically, so the button now points at the encoded file instead. Save it and your license key email will explain the rest — or try this page again in a different browser.';
+    });
+})();
+</script>
+
+</body>
+</html>
