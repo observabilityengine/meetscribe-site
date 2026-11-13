@@ -40,9 +40,9 @@
       <h2>Rather download it right here?</h2>
       <p>The same file is here if you'd rather not wait on email. Unzip it and keep the folder — that folder is the app. The steps are in your email, and they're in the README inside the folder too.</p>
       <div class="hero-actions">
-        <a class="btn btn-large" id="download-btn" href="meetscribe-1.3.0.zip.b64">Preparing your download…</a>
+        <a class="btn btn-large" id="download-btn" href="meetscribe-1.3.1.zip.b64">Preparing your download…</a>
       </div>
-      <p class="hero-note" id="download-note">MeetScribe v1.3.0 — the full app: recording, transcription, import, the commitments register, search and export.</p>
+      <p class="hero-note" id="download-note">MeetScribe v1.3.1 — the full app: recording, transcription, import, the commitments register, search and export.</p>
       <noscript><p class="hero-note">This download needs JavaScript turned on — the page unpacks your file in the browser. Turn it on and reload, and the button will be ready. Your email copy works either way.</p></noscript>
       <div class="center">
         <a class="btn btn-ghost btn-large" href="index.html">Back to the MeetScribe site</a>
@@ -63,7 +63,7 @@
 (function () {
   var btn = document.getElementById('download-btn');
   var note = document.getElementById('download-note');
-  fetch('meetscribe-1.3.0.zip.b64')
+  fetch('meetscribe-1.3.1.zip.b64')
     .then(function (r) { if (!r.ok) { throw new Error('fetch failed'); } return r.text(); })
     .then(function (text) {
       var bin = atob(text.replace(/\s+/g, ''));
@@ -71,11 +71,11 @@
       for (var i = 0; i < bin.length; i++) { bytes[i] = bin.charCodeAt(i); }
       var blob = new Blob([bytes], { type: 'application/zip' });
       btn.href = URL.createObjectURL(blob);
-      btn.setAttribute('download', 'meetscribe-1.3.0.zip');
-      btn.textContent = 'Download MeetScribe — v1.3.0 (.zip)';
+      btn.setAttribute('download', 'meetscribe-1.3.1.zip');
+      btn.textContent = 'Download MeetScribe — v1.3.1 (.zip)';
     })
     .catch(function () {
-      btn.textContent = 'Download MeetScribe — v1.3.0 (encoded file)';
+      btn.textContent = 'Download MeetScribe — v1.3.1 (encoded file)';
       note.textContent = 'Your browser could not unpack the download automatically, so the button now points at the encoded file instead. Your email copy is on its way regardless — or try this page again in a different browser.';
     });
 })();
