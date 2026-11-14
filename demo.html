@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Try the MeetScribe demo — see what it pulls out of a meeting</title>
+<meta name="description" content="Run the full MeetScribe sample, then take one short try with your own transcript text: action items, owners, due dates and decisions, each with the exact sentence as proof. The full product has no limit like this — and your first 5 meetings are free.">
+<link rel="canonical" href="https://meetscribe.ca/demo.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="styles.css">
+<style>
+      .demo-tool {
+        --d-bg: #f7f5ee; --d-surface: #ffffff; --d-surface2: #f1eee3; --d-ink: #1d2921;
+        --d-inksoft: #55604f; --d-line: #ddd6c2; --d-accent: #14684a; --d-accentink: #ffffff;
+        --d-accentsoft: #dcefe4; --d-amberbg: #fdf3e0; --d-amberink: #7a5410;
+        --d-chipbg: #eceadf; --d-proofbg: #f5f2e8;
+        --d-shadow: 0 1px 2px rgba(23, 43, 32, 0.06), 0 6px 20px rgba(23, 43, 32, 0.05);
+        font-size: 16px; line-height: 1.55;
+      }
+      .demo-tool h2, .demo-tool h3 { font-family: "Oswald", sans-serif; letter-spacing: 0.01em; }
+      @media (max-width: 860px) { .try-grid { grid-template-columns: 1fr; } }
+
+      .demo-tool .panel {
+        background: var(--d-surface);
+        border: 1px solid var(--d-line);
+        border-radius: 14px;
+        box-shadow: var(--d-shadow);
+        padding: 22px;
+      }
+.demo-tool .panel h2 { margin-bottom: 6px; }
+      .panel .sub { color: var(--d-inksoft); font-size: 0.95rem; }
+
+      label.field-label { display: block; font-weight: 600; font-size: 0.95rem; margin: 18px 0 7px; }
+      label.field-label:first-of-type { margin-top: 14px; }
+      .field-note { font-weight: 400; color: var(--d-inksoft); font-size: 0.88rem; }
+      input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 12px;
+        font: inherit;
+        color: var(--d-ink);
+        background: var(--d-bg);
+        border: 1px solid var(--d-line);
+        border-radius: 8px;
+        min-height: 44px;
+      }
+.demo-tool textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 14px;
+        font: inherit;
+        font-size: 0.97rem;
+        line-height: 1.5;
+        color: var(--d-ink);
+        background: var(--d-bg);
+        border: 1px solid var(--d-line);
+        border-radius: 8px;
+        min-height: 300px;
+        resize: vertical;
+      }
+.demo-tool input[type="text"]:focus, textarea:focus { outline: 2px solid var(--d-accent); outline-offset: 1px; border-color: var(--d-accent); }
+
+      .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+      button {
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 9px;
+        padding: 11px 20px;
+        min-height: 46px;
+        border: 1px solid transparent;
+      }
+.demo-tool button.primary { background: var(--d-accent); color: var(--d-accentink); }
+      button.primary:hover { filter: brightness(1.07); }
+      button.secondary { background: transparent; color: var(--d-accent); border-color: var(--d-accent); }
+      button.secondary:hover { background: var(--d-accentsoft); }
+      .privacy-note { margin-top: 14px; font-size: 0.9rem; color: var(--d-inksoft); }
+
+      .limits { background: var(--d-surface2); border: 1px solid var(--d-line); border-radius: 14px; padding: 22px; }
+      .limits h2 { font-size: 1.25rem; margin-bottom: 10px; }
+      .limits ul { margin: 0; padding-left: 1.15rem; }
+      .limits li { margin: 9px 0; }
+      .limits li::marker { color: var(--d-accent); }
+
+      .results { margin-top: 34px; }
+      .meeting-meta { color: var(--d-inksoft); font-size: 0.97rem; margin-top: 6px; }
+      .counts { display: flex; flex-wrap: wrap; gap: 9px; margin: 16px 0 4px; }
+      .count-chip {
+        background: var(--d-chipbg);
+        border-radius: 999px;
+        padding: 5px 13px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+.demo-tool .count-chip b { font-weight: 700; }
+
+      .result-section { margin-top: 30px; }
+      .result-section > h2 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+      .result-section > h2 .n { font-family: inherit; font-size: 0.95rem; color: var(--d-inksoft); font-weight: 600; }
+      .result-section > .section-note { color: var(--d-inksoft); margin-top: 4px; max-width: 46rem; }
+
+      .item {
+        background: var(--d-surface);
+        border: 1px solid var(--d-line);
+        border-radius: 12px;
+        box-shadow: var(--d-shadow);
+        padding: 16px 18px;
+        margin-top: 12px;
+      }
+.demo-tool .item .task { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+      .item .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 9px; font-size: 0.94rem; color: var(--d-inksoft); }
+      .item .meta b { color: var(--d-ink); font-weight: 600; }
+      .due-chip {
+        display: inline-block;
+        background: var(--d-amberbg);
+        color: var(--d-amberink);
+        border-radius: 999px;
+        padding: 2px 11px;
+        font-size: 0.87rem;
+        font-weight: 600;
+      }
+.demo-tool .proof {
+        margin-top: 11px;
+        background: var(--d-proofbg);
+        border-radius: 8px;
+        padding: 10px 13px;
+        font-size: 0.93rem;
+      }
+.demo-tool .proof .proof-label { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--d-inksoft); margin-bottom: 3px; }
+      .proof .said-by { color: var(--d-inksoft); }
+
+      .register-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 14px; align-items: start; }
+      @media (max-width: 860px) { .register-grid { grid-template-columns: 1fr; } }
+      .reg-col { background: var(--d-surface2); border: 1px solid var(--d-line); border-radius: 12px; padding: 16px; }
+      .reg-col h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+      .reg-col h3 .n { font-family: ui-sans-system, system-ui, sans-serif; font-size: 0.85rem; color: var(--d-inksoft); font-weight: 700; }
+      .reg-col .col-note { font-size: 0.88rem; color: var(--d-inksoft); margin-top: 3px; }
+      .reg-item { background: var(--d-surface); border: 1px solid var(--d-line); border-radius: 9px; padding: 11px 13px; margin-top: 10px; }
+      .reg-item .task { font-weight: 600; font-size: 0.97rem; line-height: 1.4; }
+      .reg-item .meta { font-size: 0.87rem; color: var(--d-inksoft); margin-top: 5px; }
+      .reg-item .proof-line { font-size: 0.85rem; color: var(--d-inksoft); margin-top: 6px; font-style: italic; }
+
+      .decision-item {
+        background: var(--d-surface);
+        border: 1px solid var(--d-line);
+        border-radius: 12px;
+        box-shadow: var(--d-shadow);
+        padding: 14px 18px;
+        margin-top: 12px;
+        font-size: 1.02rem;
+        font-weight: 550;
+      }
+.demo-tool .decision-item .said-by { display: block; margin-top: 4px; font-size: 0.88rem; color: var(--d-inksoft); font-weight: 400; }
+
+      .empty {
+        margin-top: 12px;
+        border: 1px dashed var(--d-line);
+        border-radius: 12px;
+        padding: 16px 18px;
+        color: var(--d-inksoft);
+        background: transparent;
+      }
+.demo-tool .reg-col .empty { border-radius: 9px; padding: 12px 13px; font-size: 0.92rem; }
+
+      .product {
+        margin-top: 44px;
+        background: var(--d-surface);
+        border: 1px solid var(--d-line);
+        border-radius: 14px;
+        padding: 24px 22px;
+        box-shadow: var(--d-shadow);
+      }
+      .demo-tool textarea[readonly] { background: var(--d-surface2); }
+      .demo-tool .char-count { font-size: 0.88rem; color: var(--d-inksoft); margin-top: 6px; }
+      .demo-tool .spent-note { margin-top: 14px; background: var(--d-accentsoft); border: 1px solid var(--d-line); border-radius: 9px; padding: 12px 14px; font-size: 0.95rem; }
+      .demo-tool .spent-note a { font-weight: 700; }
+      .demo-tool button[disabled] { opacity: 0.45; cursor: not-allowed; }
+      .demo-tool textarea[disabled] { opacity: 0.6; }
+      .results-source { color: var(--muted, #666); font-size: 0.95rem; margin-top: 4px; }
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="index.html">Meet<span>Scribe</span></a>
+    <nav class="nav">
+      <a href="index.html#sample">What you get</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#commitments">Commitments</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <a class="btn btn-small" href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">Buy — $29</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap narrow">
+      <p class="kicker">Live demo</p>
+      <h1>See what MeetScribe pulls out of a meeting.</h1>
+      <p class="lead">MeetScribe finds the <strong>action items</strong> in a transcript, works out <strong>who owes what</strong>, and lists the <strong>decisions</strong> — each one shown with the exact sentence it came from, so you can check it yourself. Run the full sample as often as you like. Then take <strong>one short try</strong> with your own text, up to 1,500 characters.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="demo-tool">
+
+      <div class="try-grid">
+        <div>
+          <section class="panel" aria-labelledby="sample-heading">
+            <h2 id="sample-heading">The worked sample</h2>
+            <p class="sub">A short meeting transcript, loaded and ready. Press <b>Run the sample</b> and look at the results below.</p>
+            <label class="field-label" for="sample-text">Sample transcript</label>
+            <textarea id="sample-text" readonly spellcheck="false"></textarea>
+            <div class="buttons">
+              <button type="button" class="primary" id="run-sample">Run the sample</button>
+            </div>
+          </section>
+
+          <section class="panel" aria-labelledby="try-heading" style="margin-top:22px">
+            <h2 id="try-heading">Your one short try</h2>
+            <p class="sub">Paste a short piece of one of your own transcripts — up to <b>1,500 characters</b>, about a minute or two of a meeting. You get one try on this page. The full MeetScribe has no limit like this, and your first 5 meetings in the app are free.</p>
+            <label class="field-label" for="visitor-name">Your name <span class="field-note">(optional — used to split the list into what's yours and what you're waiting on)</span></label>
+            <input type="text" id="visitor-name" value="" autocomplete="name" placeholder="e.g. Dana Whitfield" />
+            <label class="field-label" for="my-text">Your transcript text</label>
+            <textarea id="my-text" maxlength="1500" spellcheck="false" placeholder="Paste a few lines, like:&#10;Alex: I'll send the report by Friday.&#10;Sam: We decided to renew the plan."></textarea>
+            <p class="char-count" id="char-count">0 / 1,500 characters</p>
+            <div class="buttons">
+              <button type="button" class="primary" id="run-mine">Extract from my text</button>
+            </div>
+            <div class="spent-note" id="spent-note" style="display:none">
+              That's the one try used up on this page. In the full MeetScribe there is no limit like this — it works on whole meetings, on your own computer.
+              <a href="download.html">Get the free trial (first 5 meetings free)</a> or <a href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">buy MeetScribe — $29 one time</a>.
+            </div>
+            <p class="privacy-note">Everything runs right here on this page. Nothing you paste is uploaded or saved.</p>
+          </section>
+        </div>
+
+        <aside class="limits" aria-labelledby="limits-heading">
+          <h2 id="limits-heading">What this demo can and can't do</h2>
+          <ul>
+            <li>The sample is the full worked example — run it as often as you like. Your own text gets <b>one try, up to 1,500 characters</b>. That limit is only for this page; the full product works on whole meetings, and your first 5 meetings in the app are free.</li>
+            <li>This demo works on <b>transcript text, not audio</b>. The full product transcribes recordings on your own computer — and a plain recording has no speaker labels, so who said what can be unclear there.</li>
+            <li>How much it catches depends on how the meeting was transcribed and how clearly people stated their commitments.</li>
+            <li>It reads the commitment wording in the text — things like “I'll”, “Priya will”, “assigned to” — and shows the exact sentence as proof for everything it finds.</li>
+            <li>Anything it finds can be checked and fixed by a person before it's trusted. Treat this as a first pass, not the final word.</li>
+          </ul>
+        </aside>
+      </div>
+
+      <section class="results" aria-labelledby="results-heading">
+        <h2 id="results-heading">Results</h2>
+        <p class="results-source" id="results-source"></p>
+        <p class="meeting-meta" id="meeting-meta"></p>
+        <div class="counts" id="counts" aria-live="polite"></div>
+
+        <div class="result-section">
+          <h2>Action items <span class="n" id="actions-count"></span></h2>
+          <p class="section-note">Every commitment MeetScribe found, with the person who owns it, the due date if one was mentioned, and the sentence it came from.</p>
+          <div id="actions-list"></div>
+        </div>
+
+        <div class="result-section">
+          <h2>Commitments register <span class="n" id="register-count"></span></h2>
+          <p class="section-note">The same action items, split three ways — so you can see at a glance what's yours, what you're waiting on, and what nobody owns yet. For the sample, the split uses Dana Whitfield, one of the people in it; for your text, it uses the name you typed above.</p>
+          <div class="register-grid">
+            <div class="reg-col">
+              <h3>Mine <span class="n" id="mine-count"></span></h3>
+              <p class="col-note">Owned by you, based on the name in the try box.</p>
+              <div id="mine-list"></div>
+            </div>
+            <div class="reg-col">
+              <h3>Waiting <span class="n" id="waiting-count"></span></h3>
+              <p class="col-note">Owned by someone else — you're waiting on them.</p>
+              <div id="waiting-list"></div>
+            </div>
+            <div class="reg-col">
+              <h3>Unassigned <span class="n" id="unassigned-count"></span></h3>
+              <p class="col-note">No owner was found in the text.</p>
+              <div id="unassigned-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h2>Decisions <span class="n" id="decisions-count"></span></h2>
+          <p class="section-note">Things the meeting settled, in the words used at the time.</p>
+          <div id="decisions-list"></div>
+        </div>
+      </section>
+
+      <section class="product" aria-labelledby="product-heading">
+        <h2 id="product-heading">About the full MeetScribe</h2>
+        <p>
+          This demo is one piece of MeetScribe: the part that reads a finished transcript. The full product
+          transcribes your recordings and does this extraction on <b>your own computer, with nothing uploaded</b>,
+          and its exports end with the line “MeetScribe by Ashley Sperry | meetscribe.ca”.
+        </p>
+        <p class="buy-line">
+          Core is <b>$29 one time</b>, with your first 5 meetings free. Pro, at <b>$9 a month</b>, adds Fathom sync.
+          <a href="download.html">Get the free trial</a> or <a href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">buy MeetScribe</a>.
+        </p>
+      </section>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>MeetScribe by Ashley Sperry</p>
+    <p><a href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">Buy MeetScribe — $29</a> · <a href="https://buy.stripe.com/14AdR86hoewOfgfcKsaR207">Pro</a> · <a href="download.html">Free trial</a> · <a href="demo.html">Live demo</a> · <a href="vs-otter.html">MeetScribe vs Otter</a> · <a href="offline-transcription.html">Offline transcription</a> · <a href="faq.html">FAQ</a> · <a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<script>
+
+    (function () {
+      "use strict";
+
+      var SAMPLE_TEXT = [
+        "Title: Weekly Ops Sync",
+        "Date: 2026-11-10",
+        "Participants: Dana Whitfield, Marcus Lee, Priya Nair",
+        "",
+        "Dana Whitfield: Thanks everyone. Quick one today. We decided to move the launch to December.",
+        "Marcus Lee: I'll update the launch checklist by Friday.",
+        "Dana Whitfield: Priya will send the vendor contract to legal by November 12.",
+        "Priya Nair: I need the signed quote first. Marcus to chase the vendor for the quote by tomorrow.",
+        "Marcus Lee: The invoice cleanup is assigned to Dana Whitfield.",
+        "Dana Whitfield: Action item: Priya needs to confirm the training date.",
+        "Priya Nair: I'll book the training room.",
+        "Dana Whitfield: We agreed to renew the support plan for another year.",
+        "Marcus Lee: Someone should water the plants.",
+        "Dana Whitfield: I'll circulate the notes by end of week."
+      ].join("\n");
+
+      /* ---------------- dates ---------------- */
+
+      var MONTHS = {
+        january: 1, jan: 1, february: 2, feb: 2, march: 3, mar: 3, april: 4, apr: 4,
+        may: 5, june: 6, jun: 6, july: 7, jul: 7, august: 8, aug: 8,
+        september: 9, sep: 9, sept: 9, october: 10, oct: 10, november: 11, nov: 11,
+        december: 12, dec: 12
+      };
+      var MONTH_RE = "(January|February|March|April|May|June|July|August|September|October|November|December|Jan\\.?|Feb\\.?|Mar\\.?|Apr\\.?|Jun\\.?|Jul\\.?|Aug\\.?|Sept\\.?|Sep\\.?|Oct\\.?|Nov\\.?|Dec\\.?)";
+      var WEEKDAYS = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 };
+
+      function makeDate(y, m, d) { return new Date(Date.UTC(y, m - 1, d)); }
+      function isoOf(dt) { return dt.toISOString().slice(0, 10); }
+      function addDays(dt, n) { var x = new Date(dt.getTime()); x.setUTCDate(x.getUTCDate() + n); return x; }
+
+      function parseDateValue(str) {
+        if (!str) return null;
+        var m = str.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+        if (m) return makeDate(+m[1], +m[2], +m[3]);
+        m = str.match(new RegExp("\\b" + MONTH_RE + "\\s+(\\d{1,2})(?:st|nd|rd|th)?,\\s*(\\d{4})\\b", "i"));
+        if (m) {
+          var mo = MONTHS[m[1].toLowerCase().replace(/\./g, "")];
+          if (mo) return makeDate(+m[3], mo, +m[2]);
+        }
+        return null;
+      }
+
+      function firstDateInText(str) {
+        var isoM = str.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+        var monM = str.match(new RegExp("\\b" + MONTH_RE + "\\s+(\\d{1,2})(?:st|nd|rd|th)?,\\s*(\\d{4})\\b", "i"));
+        if (isoM && (!monM || isoM.index <= monM.index)) return makeDate(+isoM[1], +isoM[2], +isoM[3]);
+        if (monM) {
+          var mo = MONTHS[monM[1].toLowerCase().replace(/\./g, "")];
+          if (mo) return makeDate(+monM[3], mo, +monM[2]);
+        }
+        return null;
+      }
+
+      /* ---------------- parsing ---------------- */
+
+      function validSpeakerName(name) {
+        var n = name.trim();
+        if (!n) return false;
+        if (!/[A-Za-z]/.test(n)) return false;
+        if (n.split(/\s+/).length > 5) return false;
+        var low = n.toLowerCase();
+        if (low === "note" || low === "notes") return false;
+        if (/:\/\//.test(n) || /^www\./i.test(n)) return false;
+        return true;
+      }
+
+      function matchSpeaker(line) {
+        var m;
+        m = line.match(/^\[\d{1,2}:\d{2}(?::\d{2})?\]\s*(.+?)\s*:\s*(.*)$/);
+        if (m && validSpeakerName(m[1])) return { name: m[1].trim(), text: m[2] };
+        m = line.match(/^(.+?)\s*\(\d{1,2}:\d{2}(?::\d{2})?\)\s*:\s*(.*)$/);
+        if (m && validSpeakerName(m[1])) return { name: m[1].trim(), text: m[2] };
+        m = line.match(/^([^:]{1,100}?)\s*:\s*(.*)$/);
+        if (m && validSpeakerName(m[1])) return { name: m[1].trim(), text: m[2] };
+        return null;
+      }
+
+      function parseTranscript(text) {
+        var lines = text.split(/\r?\n/);
+        var title = null, dateHeader = null, participants = [];
+        var bodyLines = [];
+        var inHeaders = true;
+
+        lines.forEach(function (line) {
+          var t = line.trim();
+          if (inHeaders) {
+            if (t === "") return;
+            var hm = t.match(/^(title|date|participants|attendees|source)\s*:\s*(.*)$/i);
+            if (hm) {
+              var key = hm[1].toLowerCase(), val = hm[2].trim();
+              if (key === "title") title = val;
+              else if (key === "date") dateHeader = val;
+              else if (key === "participants" || key === "attendees") {
+                participants = val.split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+              }
+              return;
+            }
+            inHeaders = false;
+          }
+          bodyLines.push(line);
+        });
+
+        var meetingDate = null;
+        if (dateHeader) meetingDate = parseDateValue(dateHeader);
+        if (!meetingDate) meetingDate = firstDateInText(lines.slice(0, 10).join("\n"));
+
+        var turns = [], current = null, foundSpeaker = false;
+        bodyLines.forEach(function (line) {
+          var t = line.trim();
+          if (!t) return;
+          var sp = matchSpeaker(t);
+          if (sp) {
+            current = { speaker: sp.name, text: sp.text };
+            turns.push(current);
+            foundSpeaker = true;
+          } else if (current) {
+            current.text += " " + t;
+          } else {
+            current = { speaker: "Unknown", text: t };
+            turns.push(current);
+          }
+        });
+        if (!foundSpeaker) {
+          var all = turns.map(function (x) { return x.text; }).join(" ").trim();
+          turns = all ? [{ speaker: "Unknown", text: all }] : [];
+        }
+
+        var roster = [], seen = {};
+        function addName(n) {
+          var k = n.toLowerCase();
+          if (!seen[k]) { seen[k] = true; roster.push(n); }
+        }
+        participants.forEach(addName);
+        turns.forEach(function (tn) { if (tn.speaker !== "Unknown") addName(tn.speaker); });
+
+        return { title: title, meetingDate: meetingDate, participants: participants, turns: turns, roster: roster };
+      }
+
+      function splitSentences(text) {
+        var t = text.replace(/\s+/g, " ").trim();
+        if (!t) return [];
+        var out = [], start = 0;
+        for (var i = 0; i < t.length; i++) {
+          var c = t[i];
+          if ((c === "." || c === "!" || c === "?") && i + 1 < t.length && t[i + 1] === " ") {
+            out.push(t.slice(start, i + 1));
+            start = i + 2;
+            i++;
+          }
+        }
+        var rest = t.slice(start).trim();
+        if (rest) out.push(rest);
+        return out.map(function (s) { return s.trim(); }).filter(Boolean);
+      }
+
+      /* ---------------- names ---------------- */
+
+      var STOP_FIRST = {
+        the: 1, we: 1, it: 1, this: 1, that: 1, he: 1, she: 1, they: 1, there: 1,
+        team: 1, everyone: 1, someone: 1, nobody: 1, anyone: 1, i: 1
+      };
+
+      function resolveName(candidate, roster) {
+        if (!candidate) return null;
+        var words = candidate.trim().split(/\s+/).filter(Boolean);
+        if (words.length < 1 || words.length > 3) return null;
+        if (STOP_FIRST[words[0].toLowerCase()]) return null;
+        var cand = words.join(" ");
+        var i;
+        for (i = 0; i < roster.length; i++) {
+          if (roster[i].toLowerCase() === cand.toLowerCase()) return roster[i];
+        }
+        if (words.length === 1) {
+          var matches = roster.filter(function (r) {
+            return r.split(/\s+/)[0].toLowerCase() === words[0].toLowerCase();
+          });
+          return matches.length === 1 ? matches[0] : null;
+        }
+        return cand; /* two-or-three-word full name shape: accepted even if the person never spoke */
+      }
+
+      var NAME_WORD = "[A-Z][A-Za-z'’-]+";
+      var NAME_PAT = NAME_WORD + "(?: " + NAME_WORD + "){0,2}";
+      var VERB_ALT = "follow up|set up|send|prepare|draft|share|book|schedule|review|update|fix|email|create|write|check|confirm|arrange|post|publish|order|call|test|deploy|ship|build|finish|complete|deliver|present|circulate|upload|sign|approve|file|pay|chase|gather|collect|pull|run|lead|own|handle|coordinate";
+
+      function findRule3Owner(sentence, roster) {
+        var patterns = [
+          new RegExp("\\b(" + NAME_PAT + ") will\\b", "g"),
+          new RegExp("\\b(" + NAME_PAT + ") to (?:" + VERB_ALT + ")\\b", "g"),
+          new RegExp("\\b(" + NAME_PAT + ") needs to\\b", "g")
+        ];
+        for (var p = 0; p < patterns.length; p++) {
+          var m;
+          patterns[p].lastIndex = 0;
+          while ((m = patterns[p].exec(sentence)) !== null) {
+            var r = resolveName(m[1], roster);
+            if (r) return r;
+          }
+        }
+        return null;
+      }
+
+      function captureNameAfter(sentence, prefixRe) {
+        var m = sentence.match(prefixRe);
+        if (!m) return null;
+        var rest = sentence.slice(m.index + m[0].length);
+        var wm = rest.match(/^\s*([A-Z][A-Za-z'’-]+(?:\s+[A-Z][A-Za-z'’-]+){0,2})/);
+        return wm ? wm[1] : null;
+      }
+
+      function ownerRules(sentence, speaker, roster) {
+        var c, r;
+        c = captureNameAfter(sentence, /owner\s*:\s*/i);
+        if (c) { r = resolveName(c, roster); if (r) return r; }
+        c = captureNameAfter(sentence, /assigned to\s+@?\s*/i);
+        if (c) { r = resolveName(c, roster); if (r) return r; }
+        c = captureNameAfter(sentence, /@/);
+        if (c) { r = resolveName(c, roster); if (r) return r; }
+        r = findRule3Owner(sentence, roster);
+        if (r) return r;
+        return speaker !== "Unknown" ? speaker : null;
+      }
+
+      /* ---------------- extraction ---------------- */
+
+      var DECISION_RES = [
+        /\bwe decided\b/i, /\bdecided to\b/i, /\bagreed to\b/i, /\bwe agreed\b/i,
+        /\bgoing with\b/i, /\bwe'll go with\b/i, /\bwe approved\b/i, /\bdecision:/i,
+        /\bfinal call:/i, /\bit's decided\b/i, /\bconsensus (is|was)\b/i, /\bwe're going with\b/i
+      ];
+
+      function isDecision(s) {
+        return DECISION_RES.some(function (re) { return re.test(s); });
+      }
+
+      function extractAction(sentence, speaker, roster) {
+        var s = sentence.replace(/’/g, "'");
+        /* 1. labelled action */
+        if (/\b(action item|to-do|todo|action)\s*:/i.test(s)) {
+          return { owner: ownerRules(s, speaker, roster) };
+        }
+        /* 2. I'll / I will */
+        if (/\bI'll\b/.test(s) || /\bI will\b/.test(s)) {
+          return { owner: speaker !== "Unknown" ? speaker : null };
+        }
+        /* 3. Name will / Name to <verb> / Name needs to */
+        var o3 = findRule3Owner(s, roster);
+        if (o3) return { owner: o3 };
+        /* 4. assigned to Name */
+        if (captureNameAfter(s, /assigned to\s+@?\s*/i)) {
+          return { owner: ownerRules(s, speaker, roster) };
+        }
+        return null;
+      }
+
+      function fridayOfWeek(dt) {
+        var sinceMon = (dt.getUTCDay() + 6) % 7;
+        return addDays(dt, 4 - sinceMon);
+      }
+
+      function resolveDue(c, meeting) {
+        if (c.kind === "iso") return isoOf(makeDate(c.y, c.mo, c.d));
+        if (c.kind === "md") {
+          var dt = makeDate(meeting.getUTCFullYear(), c.mo, c.d);
+          if (dt.getTime() < meeting.getTime()) dt = makeDate(meeting.getUTCFullYear() + 1, c.mo, c.d);
+          return isoOf(dt);
+        }
+        if (c.kind === "weekday") {
+          var diff = (c.wd - meeting.getUTCDay() + 7) % 7;
+          if (c.next) diff += 7;
+          return isoOf(addDays(meeting, diff));
+        }
+        switch (c.word) {
+          case "tomorrow": return isoOf(addDays(meeting, 1));
+          case "today": case "tonight": case "eod": case "end of day":
+          case "end of the day": case "cob": case "close of business":
+            return isoOf(meeting);
+          case "end of week": case "end of the week":
+            return isoOf(fridayOfWeek(meeting));
+          case "next week":
+            return isoOf(addDays(fridayOfWeek(meeting), 7));
+        }
+        return null;
+      }
+
+      function findDue(sentence, meeting) {
+        var cands = [], m;
+        var reISO = /\b(by|due|before)\s+(\d{4})-(\d{2})-(\d{2})\b/gi;
+        while ((m = reISO.exec(sentence)) !== null) {
+          cands.push({ index: m.index, prio: 0, phrase: m[0], kind: "iso", y: +m[2], mo: +m[3], d: +m[4] });
+        }
+        var reMD = new RegExp("\\b(by|due|before)\\s+" + MONTH_RE + "\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b", "gi");
+        while ((m = reMD.exec(sentence)) !== null) {
+          var mo = MONTHS[m[2].toLowerCase().replace(/\./g, "")];
+          if (mo) cands.push({ index: m.index, prio: 1, phrase: m[0], kind: "md", mo: mo, d: +m[3] });
+        }
+        var reWD = /\bby\s+(next\s+)?(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/gi;
+        while ((m = reWD.exec(sentence)) !== null) {
+          cands.push({ index: m.index, prio: 2, phrase: m[0], kind: "weekday", wd: WEEKDAYS[m[2].toLowerCase()], next: !!m[1] });
+        }
+        var rePH = /\b(?:(by|due|before)\s+)?(end of the day|end of day|end of the week|end of week|close of business|tomorrow|today|tonight|next week|eod|cob)\b/gi;
+        while ((m = rePH.exec(sentence)) !== null) {
+          cands.push({ index: m.index, prio: 3, phrase: m[0], kind: "phrase", word: m[2].toLowerCase() });
+        }
+        if (!cands.length) return null;
+        cands.sort(function (a, b) { return (a.index - b.index) || (a.prio - b.prio); });
+        var c = cands[0];
+        return { phrase: c.phrase, resolved: meeting ? resolveDue(c, meeting) : null };
+      }
+
+      function extract(text) {
+        var parsed = parseTranscript(text);
+        var actions = [], decisions = [];
+        parsed.turns.forEach(function (turn) {
+          var seen = {};
+          splitSentences(turn.text).forEach(function (sentence) {
+            var key = sentence.toLowerCase();
+            if (seen[key]) return;
+            seen[key] = true;
+            if (isDecision(sentence.replace(/’/g, "'"))) {
+              decisions.push({ text: sentence, speaker: turn.speaker });
+            }
+            var act = extractAction(sentence, turn.speaker, parsed.roster);
+            if (act) {
+              var due = findDue(sentence, parsed.meetingDate);
+              actions.push({
+                task: sentence, proof: sentence, speaker: turn.speaker,
+                owner: act.owner,
+                duePhrase: due ? due.phrase : null,
+                dueResolved: due ? due.resolved : null
+              });
+            }
+          });
+        });
+        return { meta: parsed, actions: actions, decisions: decisions };
+      }
+
+      function isMine(owner, visitor) {
+        if (!owner || !visitor) return false;
+        var o = owner.trim().toLowerCase(), v = visitor.trim().toLowerCase();
+        if (!o || !v) return false;
+        if (o === v) return true;
+        var ow = o.split(/\s+/), vw = v.split(/\s+/);
+        if (ow.length === 1 && ow[0] === vw[0]) return true;
+        if (vw.length === 1 && vw[0] === ow[0]) return true;
+        return false;
+      }
+
+      /* ---------------- rendering ---------------- */
+
+      function esc(s) {
+        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      }
+      function $(id) { return document.getElementById(id); }
+
+      function dueHtml(item) {
+        if (!item.duePhrase) return '<span>No due date mentioned</span>';
+        var s = '<span class="due-chip">' + esc(item.duePhrase) + "</span>";
+        if (item.dueResolved) s += " <span>→ " + esc(item.dueResolved) + "</span>";
+        return s;
+      }
+
+      function render(result, visitorName) {
+        var meta = result.meta, actions = result.actions, decisions = result.decisions;
+
+        var metaBits = [];
+        if (meta.title) metaBits.push(esc(meta.title));
+        if (meta.meetingDate) {
+          metaBits.push(meta.meetingDate.toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }));
+        }
+        if (meta.participants.length) metaBits.push("People: " + esc(meta.participants.join(", ")));
+        $("meeting-meta").innerHTML = metaBits.length ? metaBits.join(" · ") : "No title, date, or participant list was found in this text.";
+
+        $("counts").innerHTML =
+          '<span class="count-chip"><b>' + actions.length + "</b>&nbsp; action item" + (actions.length === 1 ? "" : "s") + "</span>" +
+          '<span class="count-chip"><b>' + decisions.length + "</b>&nbsp; decision" + (decisions.length === 1 ? "" : "s") + "</span>";
+
+        $("actions-count").textContent = actions.length ? "(" + actions.length + ")" : "";
+        $("actions-list").innerHTML = actions.length ? actions.map(function (it) {
+          return '<article class="item">' +
+            '<p class="task">' + esc(it.task) + "</p>" +
+            '<div class="meta"><span>Owner: <b>' + (it.owner ? esc(it.owner) : "not named") + "</b></span>" +
+            "<span>Due: " + dueHtml(it) + "</span></div>" +
+            '<div class="proof"><span class="proof-label">Proof — the sentence as written</span>“' + esc(it.proof) + "”" +
+            ' <span class="said-by">— said by ' + esc(it.speaker) + "</span></div>" +
+            "</article>";
+        }).join("") : '<div class="empty">No action items found in this text. Commitments are usually worded like “I\'ll…”, “Priya will…”, or “…is assigned to…”.</div>';
+
+        var mine = [], waiting = [], unassigned = [];
+        actions.forEach(function (it) {
+          if (!it.owner) unassigned.push(it);
+          else if (isMine(it.owner, visitorName)) mine.push(it);
+          else waiting.push(it);
+        });
+
+        function regItem(it) {
+          var due = it.duePhrase ? esc(it.duePhrase) + (it.dueResolved ? " → " + esc(it.dueResolved) : "") : "No due date mentioned";
+          return '<div class="reg-item"><p class="task">' + esc(it.task) + "</p>" +
+            '<p class="meta">Owner: ' + (it.owner ? esc(it.owner) : "not named") + " · Due: " + due + "</p>" +
+            '<p class="proof-line">Proof: “' + esc(it.proof) + "” — said by " + esc(it.speaker) + "</p></div>";
+        }
+        $("mine-count").textContent = "(" + mine.length + ")";
+        $("waiting-count").textContent = "(" + waiting.length + ")";
+        $("unassigned-count").textContent = "(" + unassigned.length + ")";
+        $("register-count").textContent = actions.length ? "(" + actions.length + ")" : "";
+        $("mine-list").innerHTML = mine.length ? mine.map(regItem).join("") :
+          '<div class="empty">' + (visitorName ? "Nothing is assigned to " + esc(visitorName) + " in this text." : "Type your name above and run it again to see what's yours.") + "</div>";
+        $("waiting-list").innerHTML = waiting.length ? waiting.map(regItem).join("") :
+          '<div class="empty">Nothing here — no action items are owned by anyone else.</div>';
+        $("unassigned-list").innerHTML = unassigned.length ? unassigned.map(regItem).join("") :
+          '<div class="empty">Nothing here — every action item has an owner.</div>';
+
+        $("decisions-count").textContent = decisions.length ? "(" + decisions.length + ")" : "";
+        $("decisions-list").innerHTML = decisions.length ? decisions.map(function (d) {
+          return '<div class="decision-item">“' + esc(d.text) + '”<span class="said-by">— said by ' + esc(d.speaker) + "</span></div>";
+        }).join("") : '<div class="empty">No decisions found in this text. Decisions are usually worded like “we decided…”, “we agreed to…”, or “final call:”.</div>';
+      }
+
+      
+      /* ---------------- wiring (limited demo) ---------------- */
+
+      var TRY_LIMIT = 1500;
+      var TRY_KEY = "meetscribeDemoTryUsed";
+      var nameInput = $("visitor-name"), sampleInput = $("sample-text"), myInput = $("my-text");
+      var lastRun = null; // {mode: "sample"|"mine", text: string}
+
+      function tryUsed() {
+        try { if (window.localStorage.getItem(TRY_KEY) === "1") return true; } catch (e) {}
+        return window.__msTryUsed === true;
+      }
+      function markTryUsed() {
+        window.__msTryUsed = true;
+        try { window.localStorage.setItem(TRY_KEY, "1"); } catch (e) {}
+      }
+      function applySpentState() {
+        myInput.disabled = true;
+        $("run-mine").disabled = true;
+        $("spent-note").style.display = "block";
+        $("char-count").textContent = "Your one try on this page has been used.";
+      }
+
+      function run(text, mode) {
+        lastRun = { mode: mode, text: text };
+        $("results-source").textContent = mode === "sample"
+          ? "Showing results for: the worked sample."
+          : "Showing results for: your text.";
+        if (!text || !text.trim()) {
+          $("meeting-meta").textContent = "";
+          $("counts").innerHTML = "";
+          $("actions-count").textContent = "";
+          $("register-count").textContent = "";
+          $("decisions-count").textContent = "";
+          $("actions-list").innerHTML = '<div class="empty">There\'s nothing to read yet \u2014 run the sample, or paste a short piece of a transcript into the try box.</div>';
+          $("mine-list").innerHTML = '<div class="empty">Nothing yet.</div>';
+          $("waiting-list").innerHTML = '<div class="empty">Nothing yet.</div>';
+          $("unassigned-list").innerHTML = '<div class="empty">Nothing yet.</div>';
+          $("mine-count").textContent = "(0)";
+          $("waiting-count").textContent = "(0)";
+          $("unassigned-count").textContent = "(0)";
+          $("decisions-list").innerHTML = '<div class="empty">Nothing yet.</div>';
+          return;
+        }
+        render(extract(text), mode === "sample" ? "Dana Whitfield" : nameInput.value);
+      }
+
+      function updateCount() {
+        if (tryUsed()) return;
+        $("char-count").textContent = myInput.value.length + " / " + TRY_LIMIT + " characters";
+      }
+
+      $("run-sample").addEventListener("click", function () { run(SAMPLE_TEXT, "sample"); });
+      $("run-mine").addEventListener("click", function () {
+        if (tryUsed()) { applySpentState(); return; }
+        var text = myInput.value;
+        if (!text || !text.trim()) { run("", "mine"); return; }
+        if (text.length > TRY_LIMIT) text = text.slice(0, TRY_LIMIT);
+        markTryUsed();
+        applySpentState();
+        run(text, "mine");
+      });
+      myInput.addEventListener("input", updateCount);
+      nameInput.addEventListener("input", function () {
+        if (lastRun && lastRun.mode === "mine") run(lastRun.text, "mine");
+      });
+
+      sampleInput.value = SAMPLE_TEXT;
+      if (tryUsed()) applySpentState(); else updateCount();
+      run(SAMPLE_TEXT, "sample");
+    })();
+</script>
+</body>
+</html>
