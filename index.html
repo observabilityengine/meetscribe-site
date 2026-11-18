@@ -50,7 +50,7 @@
       <a href="#commitments">Commitments</a>
       <a href="#pricing">Pricing</a>
       <a href="#guides">Guides</a>
-      <a href="#faq">FAQ</a>
+      <a href="faq.html">FAQ</a>
     </nav>
     <a class="btn btn-small" href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">Buy — $29</a>
   </div>
@@ -74,8 +74,6 @@
       <div class="proof">
         <div><b>14</b>action items found in the sample meetings</div>
         <div><b>6</b>decisions pulled out alongside them</div>
-        <div><b>99</b>automated tests passing</div>
-        <div><b>0</b>uploads — your recordings and transcripts never leave your machine</div>
       </div>
     </div>
   </section>
@@ -91,12 +89,28 @@
 
   <!-- SAMPLE -->
   <section class="section section-alt" id="sample">
-    <div class="wrap narrow">
+    <div class="wrap">
       <h2>What you get: a sample</h2>
-      <p>This is real output from the sample meetings that come with MeetScribe — not a mock-up. Across the 4 sample meetings, MeetScribe found <strong>14 action items</strong> and <strong>6 decisions</strong>. Here is one whole meeting's worth, exactly as the report reads:</p>
+      <p>This is real output from the sample meetings that come with MeetScribe — not a mock-up. Across the 4 sample meetings, MeetScribe found <strong>14 action items</strong> and <strong>6 decisions</strong>. Here is one whole meeting: the full transcript on one page, and what MeetScribe pulled out of it on the other.</p>
 
-      <article class="sample-doc">
-        <p class="sample-label">Sample output</p>
+      <div class="papers">
+      <article class="sample-doc paper paper-left">
+        <p class="sample-label">The whole meeting</p>
+        <h3>Product Sync — full transcript</h3>
+        <p class="sample-meta">Tuesday, November 3, 2026 · Recorded on Fathom · Dana Whitfield, Marcus Lee, and Priya Nair</p>
+        <p class="turn"><span class="ts">[00:00]</span> <strong>Dana Whitfield:</strong> Thanks for joining. We need to lock the beta scope today and clear the open questions on pricing.</p>
+        <p class="turn"><span class="ts">[00:42]</span> <strong>Marcus Lee:</strong> The onboarding flow is done. The last piece is the invite email, and I'll finish the invite email copy by Thursday.</p>
+        <p class="turn"><span class="ts">[01:15]</span> <strong>Priya Nair:</strong> Support tickets about exports dropped this week, which is a good sign. I still owe the team the export bug summary.</p>
+        <p class="turn"><span class="ts">[02:03]</span> <strong>Dana Whitfield:</strong> On pricing, we decided to launch the beta at the current price and revisit it in January.</p>
+        <p class="turn"><span class="ts">[02:40]</span> <strong>Marcus Lee:</strong> That works. Marcus Lee will draft the pricing page by 2026-11-10 so it is ready before the announcement.</p>
+        <p class="turn"><span class="ts">[03:12]</span> <strong>Priya Nair:</strong> Priya Nair to confirm the venue booking for the December demo day.</p>
+        <p class="turn"><span class="ts">[03:55]</span> <strong>Dana Whitfield:</strong> We agreed to drop the legacy export format in the next release.</p>
+        <p class="turn"><span class="ts">[04:20]</span> <strong>Marcus Lee:</strong> I will update the roadmap document once the pricing page is drafted.</p>
+        <p class="turn"><span class="ts">[04:48]</span> <strong>Priya Nair:</strong> Action item: Dana Whitfield to send the beta invite list by Friday.</p>
+        <p class="turn"><span class="ts">[05:10]</span> <strong>Dana Whitfield:</strong> Good. Last thing, we are going with the shorter onboarding checklist for the beta cohort.</p>
+      </article>
+      <article class="sample-doc paper paper-right">
+        <p class="sample-label">What it pulls out</p>
         <h3>Product Sync</h3>
         <p class="sample-meta">Tuesday, November 3, 2026 · Recorded on Fathom · Dana Whitfield, Marcus Lee, and Priya Nair</p>
 
@@ -133,6 +147,7 @@
 
         <p class="sample-foot">Every item quotes the exact sentence from the transcript, so you can check it in context. Relative dates like “by Friday” are worked out against the meeting date. This meeting alone: 5 action items, 3 decisions.</p>
       </article>
+      </div>
 
       <div class="center">
         <a class="btn btn-large" href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">Get MeetScribe — $29 one-time</a>
@@ -240,17 +255,6 @@
     </div>
   </section>
 
-  <!-- HONEST LIMITS -->
-  <section class="section">
-    <div class="wrap narrow">
-      <div class="honest">
-        <h3>The honest limits</h3>
-        <p>MeetScribe works from words and patterns, not minds. It catches commitments phrased the way people usually phrase them — "I'll send that by Friday," "Sarah will book the room" — and it will miss vague ones like "we should probably look into that sometime." Every item it finds quotes the full sentence, so you can check it in context, and it never invents one that isn't in the text.</p>
-        <p>Transcription has its own limits, stated plainly. The speech model doesn't identify who is speaking, so recordings come in without speaker labels — items that name a person still get that person as owner, but a bare "I will…" from a recording stays unassigned rather than guessed at. And accuracy depends on the audio: clear recordings in a quiet room do best; crosstalk, distant microphones, and names can come out wrong. Read the transcript before you rely on it.</p>
-        <p>Two practical notes. Recording and transcription use two optional packages listed in an included requirements file (a one-line install), plus the free ffmpeg program for non-WAV recordings. And the first time you transcribe, MeetScribe downloads its speech model once — about 75 MB for the default — tells you the size and destination first, and never touches the network for transcription again.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- PRICING -->
   <section class="section section-alt" id="pricing">
@@ -322,68 +326,17 @@
         <h3>Do I need to create an account?</h3>
         <p>No account. Buy it, install it, use it. MeetScribe runs on your machine — there's nothing to sign into.</p>
       </div>
-
       <div class="qa">
         <h3>Does MeetScribe run online?</h3>
         <p>No. Recording, transcription, import, search, actions, decisions, the commitments register and export all work offline, on your own computer. There are no hosted accounts and nothing is uploaded. The only downloads are the program itself and a one-time speech-model download (about 75 MB) the first time you transcribe — MeetScribe tells you the size and destination before it starts.</p>
       </div>
-
-      <div class="qa">
-        <h3>Can it transcribe a recording I already have?</h3>
-        <p>Yes — that's built in. Give it an audio or video file (MP3, WAV, M4A, MP4, FLAC, OGG, WebM) and it transcribes it offline with a local speech model, then treats it like any other meeting: searchable, exportable, and mined for action items and decisions. You can also record straight from your microphone inside the tool.</p>
-      </div>
-
-      <div class="qa">
-        <h3>Does transcription label who is speaking?</h3>
-        <p>No — the model doesn't identify speakers, and MeetScribe won't guess. A transcribed recording comes in as one voice stream. Sentences that name a person ("Marcus will draft…") still get that person as the owner; a bare "I will…" stays unassigned for you to confirm in the register.</p>
-      </div>
-
-      <div class="qa">
-        <h3>What do I need for recording and transcription?</h3>
-        <p>Two optional packages listed in the included requirements file — one install command — plus the free ffmpeg program if you'll transcribe non-WAV files. Everything else (import, search, export, the register) runs on plain Python 3.10+ with nothing extra.</p>
-      </div>
-
-      <div class="qa">
-        <h3>How does the commitments register work?</h3>
-        <p>Every action item MeetScribe finds lands in a confirm queue first — nothing is tracked until you approve or fix it. Confirmed items split into "what you owe" and "what you're waiting on," each with the exact sentence from the meeting as proof. You can see what's overdue or due this week, export due dates to your calendar as an .ics file, and have follow-up messages drafted for you. MeetScribe never sends a message itself — you always send from your own mail.</p>
-      </div>
-
       <div class="qa">
         <h3>Is it a subscription?</h3>
         <p>The core tool is $29 one-time — no monthly fee. MeetScribe Pro, which adds automatic Fathom sync, is a separate optional subscription at $9/month.</p>
       </div>
 
-      <div class="qa">
-        <h3>Which tools can it import from?</h3>
-        <p>Fathom, Otter, Fireflies, and Zoom — you export transcripts from those tools (TXT, VTT, SRT or JSON) and import them into MeetScribe. Recordings from anywhere come in through transcription instead.</p>
-      </div>
-
-      <div class="qa">
-        <h3>What does it pull out of a meeting?</h3>
-        <p>Action items with owners and due dates, plus a list of the decisions that were made — like the sample above.</p>
-      </div>
-
-      <div class="qa">
-        <h3>What if I import the same meeting twice?</h3>
-        <p>MeetScribe catches duplicates, so your library doesn't fill up with copies.</p>
-      </div>
-
-      <div class="qa">
-        <h3>Does it sync with Fathom automatically?</h3>
-        <p>The core tool doesn't — you export and import, or transcribe the recording. Automatic Fathom sync is what MeetScribe Pro adds, using your own Fathom API key; synced meetings land in the same local library.</p>
-      </div>
-
-      <div class="qa">
-        <h3>What if it doesn't work for me?</h3>
-        <p>The trial covers your first 5 meetings free, however they arrive, so you'll know before you pay. And every purchase has a 14-day refund, no questions asked.</p>
-      </div>
-
-      <div class="qa">
-        <h3>Where do I buy it?</h3>
-        <p>Right here on this site: <a href="https://buy.stripe.com/28EeVc8pw60i9VVeSAaR206">MeetScribe — $29 one-time</a>. Pro is <a href="https://buy.stripe.com/14AdR86hoewOfgfcKsaR207">here</a>. Checkout is through Stripe, and after you pay you get the download and your license key.</p>
-      </div>
-    </div>
-  </section>
+      <p class="center">More questions? <a href="faq.html">Read the full FAQ</a></p>
+    </section>
 
 </main>
 

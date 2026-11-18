@@ -73,7 +73,10 @@
 
       <div class="qa">
         <h3>7. Honest limits</h3>
-        <p>MeetScribe does its work locally, from the words in your meetings, and it has limits we state openly: it does not identify who is speaking on a plain recording, transcription accuracy depends on the quality of the audio, and the extraction can miss a commitment that was phrased unusually. Every tracked item keeps its exact source sentence so you can check it. Please verify important items before relying on them.</p>
+        
+        <p>MeetScribe works from words and patterns, not minds. It catches commitments phrased the way people usually phrase them — "I'll send that by Friday," "Sarah will book the room" — and it will miss vague ones like "we should probably look into that sometime." Every item it finds quotes the full sentence, so you can check it in context, and it never invents one that isn't in the text.</p>
+        <p>Transcription has its own limits, stated plainly. The speech model doesn't identify who is speaking, so recordings come in without speaker labels — items that name a person still get that person as owner, but a bare "I will…" from a recording stays unassigned rather than guessed at. And accuracy depends on the audio: clear recordings in a quiet room do best; crosstalk, distant microphones, and names can come out wrong. Read the transcript before you rely on it.</p>
+        <p>Two practical notes. Recording and transcription use two optional packages listed in an included requirements file (a one-line install), plus the free ffmpeg program for non-WAV recordings. And the first time you transcribe, MeetScribe downloads its speech model once — about 75 MB for the default — tells you the size and destination first, and never touches the network for transcription again.</p>
       </div>
 
       <div class="qa">
